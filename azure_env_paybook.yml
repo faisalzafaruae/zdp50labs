@@ -1,5 +1,5 @@
 # Create or update a template deployment based on uris using parameter and template links
-- name: Deploy Hortonworks Template
+- name: Deploying Cloud Infrastructure
   hosts: localhost
   connection: local
   gather_facts: False
@@ -10,7 +10,6 @@
         location: westeurope
         state: present
         resource_group_name: zdptraining
-        #parameters_link: 'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/parameters.json'
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters: 
           location: 
