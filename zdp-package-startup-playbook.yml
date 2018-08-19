@@ -186,7 +186,7 @@
       - name: Enable impersonation
         command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} {{ zdp_db_name }}  -e  \"update SYSTEM_CONFIG set SYSVALUE=\'true\' where SYSKEY=\'IMPERSONATION_ENABLED\'\""
   become: true
-  run_one: true
+  run_once: true
   #connection: local
 
 
