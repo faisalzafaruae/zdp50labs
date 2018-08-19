@@ -1,0 +1,22 @@
+---
+#  - name: Copy es package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-es-2.4.1.0-1.noarch.rpm"
+
+  - name: Install es in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-es"
+
+  - name: Modify network.host to ip in elasticsearch.yml
+    replace:
+        path: /etc/zdp-es/elasticsearch.yml
+        regexp: '^network\.host\: ..*$'
+        replace: 'network.host: {{ zdp_gateway_hostname }}'
+        backup: no

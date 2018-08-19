@@ -1,0 +1,147 @@
+---
+
+- hosts: mysql
+  tasks:
+  - name: Create temp directory for zdp to work
+    file:
+        path: "{{zdp_package_temp_location}}"
+        state: directory
+  become: true
+
+- hosts: gateway
+  tasks:
+  - name: Create certificate path from zdp
+    file:
+        path: /opt/zdp/zdp-cacerts
+        state: directory
+        owner: zaloni
+  become: true
+
+  
+- hosts: gateway
+  tasks:
+  - name: Copy certificates to ceertificate path
+    copy:
+        src: "cert/{{ item }}"
+        dest: /opt/zdp/zdp-cacerts
+    with_items:
+        - "zdpdoc-n3.zalonilabs.com.crt"
+        - "zdpdoc-n3.zalonilabs.com.csr"
+        - "zdpdoc-n3.zalonilabs.com.p12"
+        - "zdpdoc-n3.zalonilabs.com.jks"
+        - "zdpdoc-n3.zalonilabs.com.key"
+  become: true
+#  #connection: local
+
+- hosts: mysql
+  tasks:
+  - include_role:
+     name: mysql
+     tasks_from: install
+  become: true
+#  #connection: local
+
+- hosts: node
+  tasks:
+  - include_role:
+     name: node
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: registry
+  tasks:
+  - include_role:
+     name: registry
+     tasks_from: install
+  become: true
+  #connection: local
+
+
+- hosts: es
+  tasks:
+  - include_role:
+     name: es
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: logstash
+  tasks:
+  - include_role:
+     name: logstash
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: activemq
+  tasks:
+  - include_role:
+     name: activemq
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: lineage
+  tasks:
+  - include_role:
+     name: lineage
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: gateway
+  tasks:
+  - include_role:
+     name: gateway
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: ingestion-warden
+  tasks:
+  - include_role:
+     name: ingestion-warden
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: executor
+  tasks:
+  - include_role:
+     name: executor
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: kibana
+  tasks:
+  - include_role:
+     name: kibana
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: mr
+  tasks:
+  - include_role:
+     name: mr
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: spark
+  tasks:
+  - include_role:
+     name: spark
+     tasks_from: install
+  become: true
+  #connection: local
+
+- hosts: hive
+  tasks:
+  - include_role:
+     name: hive
+     tasks_from: install
+  become: true
+  #connection: local

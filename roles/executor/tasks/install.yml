@@ -1,0 +1,46 @@
+---
+#  - name: Copy executor package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-executor-5.0.0_FINAL.0-1.noarch.rpm"
+
+  - name: Install executor in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-executor"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-executor/bootstrap-prod.yml
+        key: jhipster.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-executor/bootstrap-prod.yml
+        key: spring.cloud.config.uri
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/config"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-executor/zdp-executor.yml
+        key: eureka.instance.service-url.defaultZone
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+
+
+# Execute if zdp_ssl_enable is set to True
+  - name: Set JAVA_OPTS parameters
+    lineinfile:
+        path: /etc/sysconfig/zdp-executor
+        line: "JAVA_OPTS=\"-Djavax.net.ssl.trustStore={{ zdp_ssl_trust_store }} -Djavax.net.ssl.trustStoreType={{ zdp_ssl_key_store_type }} -Djavax.net.ssl.trustStorePassword={{ zdp_ssl_key_store_password }} -Djavax.net.debug=ssl\""
+    when: zdp_ssl_enable == True
+

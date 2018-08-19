@@ -1,0 +1,198 @@
+---
+- hosts: registry
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-registry'
+  become: true
+  #connection: local
+
+- hosts: es
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-es'
+  become: true
+  #connection: local
+
+- hosts: activemq
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-activemq'
+  become: true
+  #connection: local
+
+- hosts: logstash
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 19200
+      delay: 2
+    with_items: "{{groups['es']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-logstash'
+  become: true
+  #connection: local
+
+- hosts: lineage
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 19200
+      delay: 2
+    with_items: "{{groups['es']}}"
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-lineage'
+  become: true
+  #connection: local
+
+- hosts: gateway
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 19200
+      delay: 2
+    with_items: "{{groups['es']}}"
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-gateway'
+  become: true
+  #connection: local
+
+- hosts: ingestion-warden
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-ingestion-warden'
+  become: true
+  #connection: local
+
+- hosts: executor
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-executor'
+  become: true
+  #connection: local
+
+- hosts: kibana
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8080
+      delay: 2
+      timeout: 1000
+    with_items: "{{groups['gateway']}}"
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-gateway'
+  become: true
+  #connection: local
+
+- hosts: mr
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-mr'
+  become: true
+  #connection: local
+
+- hosts: spark
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-spark'
+  become: true
+  #connection: local
+
+- hosts: hive
+  tasks:
+  - wait_for:
+      host: "{{ item }}"
+      port: 8761
+      delay: 2
+    with_items: "{{groups['registry']}}"
+  - include_role:
+      name: common
+      tasks_from: service
+    vars:
+      zdp_service_name: 'zdp-hive'
+  become: true
+  #connection: local
+
+
+- hosts: mysql
+  tasks:     
+      - name: Enable impersonation
+        command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} {{ zdp_db_name }}  -e  \"update SYSTEM_CONFIG set SYSVALUE=\'true\' where SYSKEY=\'IMPERSONATION_ENABLED\'\""
+  become: true
+  run_one: true
+  #connection: local
+
+
+- hosts: mysql
+  tasks:     
+      - name: Create dummy test zone
+        command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} {{ zdp_db_name }} -e  \"insert into ZONE_INFORMATION values(null, \'TEST_ANSIBLE_ZONE\', \'test zone for demo\', null, null, \'admin\', \'admin\', 0);\""
+  become: true
+  run_once: true

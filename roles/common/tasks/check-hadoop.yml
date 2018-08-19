@@ -1,0 +1,7 @@
+- name: Fetch Hadoop version
+  shell: hadoop version 2>&1 | grep Hadoop | awk '{print $2}' | grep 2
+  register: hadoop_version
+- assert:
+    that:
+      - hadoop_version.stdout is version('2.1', '>=')
+    msg: "Unsupported Hadoop version. Found {{hadoop_version.stdout }}"

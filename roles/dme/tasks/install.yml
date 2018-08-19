@@ -1,0 +1,49 @@
+---
+#  - name: Copy dme package to tmp directory
+#    copy:
+#        src/tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-dme-5.0.0_FINAL.0-1.noarch.rpm"
+
+  - name: Install dme in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enabledrepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-dme"
+
+
+# Execute if zdp_ssl_enable is set to True
+  - name: Set EXTRA_JAVA_OPTS parameters
+    lineinfile:
+        path: /etc/sysconfig/zdp-executor
+        line: "EXTRA_JAVA_OPTS=\"-Djavax.net.ssl.trustStore={{ zdp_ssl_trust_store }} -Djavax.net.ssl.trustStoreType={{ zdp_ssl_key_store_type }} -Djavax.net.ssl.trustStorePassword={{ zdp_ssl_key_store_password }} -Djavax.net.debug=ssl\""
+    when: zdp_ssl_enable == True
+
+# Changes in case kerberos needs to be configured in zdp
+  - name: Add keytab location to zdp-hive.yml
+  become: True
+  yedit:
+      src: /etc/zdp-hive/zdp-hive.yml
+      key: keytab.location
+      value: "{{ zdp_keytab_location }}"
+  when: zdp_kerberos_enable == True
+
+  - name: Add keytab principal to zdp-hive.yml
+  become: True
+  yedit:
+      src: /etc/zdp-hive/zdp-hive.yml
+      key: keytab.principal
+      value: "{{ zdp_keytab_principal }}"
+  when: zdp_kerberos_enable == True
+
+  - name: Add krb5 conf location to zdp-hive.yml
+  become: True
+  yedit:
+      src: /etc/zdp-hive/zdp-hive.yml
+      key: kerberos.conf.location
+      value: "{{ zdp_krb_conf_location }}"
+  when: zdp_kerberos_enable == True
+

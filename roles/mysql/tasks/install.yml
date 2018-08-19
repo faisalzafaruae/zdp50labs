@@ -1,0 +1,75 @@
+---
+#  - name: Copy mysql packages to tmp directory
+#    copy: 
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "mysql-community-client-5.7.22-1.el7.x86_64.rpm"
+#        - "mysql-community-libs-5.7.22-1.el7.x86_64.rpm"
+#        - "mysql-community-common-5.7.22-1.el7.x86_64.rpm"
+#        - "mysql-community-server-5.7.22-1.el7.x86_64.rpm"
+
+  - name: Install mysql in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "mysql-common"
+        - "mysql-libs"
+        - "mysql"
+        - "mysql-server"
+
+  - name: Make my.cnf file for mysql
+    copy:
+        dest: "/etc/my.cnf"
+        content: |
+            [mysqld]
+            #
+            # Remove leading # and set to the amount of RAM for the most important data
+            # cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+            # innodb_buffer_pool_size = 128M
+            #
+            # Remove leading # to turn on a very important data integrity option: logging
+            # changes to the binary log between backups.
+            # log_bin
+            #
+            # Remove leading # to set options mainly useful for reporting servers.
+            # The server defaults are faster for transactions and fast SELECTs.
+            # Adjust sizes as needed, experiment to find the optimal values.
+            # join_buffer_size = 128M
+            # sort_buffer_size = 2M
+            # read_rnd_buffer_size = 2M
+            datadir=/var/lib/mysql
+            socket=/var/lib/mysql/mysql.sock
+            # Disabling symbolic-links is recommended to prevent assorted security risks
+            symbolic-links=0
+            log-error=/var/log/mysqld.log
+            pid-file=/var/run/mysqld/mysqld.pid
+            # ZDP requisites
+            lower_case_table_names=0
+            max_connections=700
+            query_cache_size=256M
+            key_buffer_size=1024M
+            max_allowed_packet=256M
+
+  - name: Set root password for mysql [STEP 1]
+    service:
+        name: mysqld
+        state: restarted
+
+  - name: Set root password for mysql [STEP 2]
+    command: "mysqladmin -uroot password {{ mysql_admin_password }}"
+
+
+  - name: Create the ZDP Database with name "{{ zdp_db_name }}"
+    command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}}  -e 'CREATE DATABASE IF NOT EXISTS {{ zdp_db_name }} CHARSET LATIN1'"
+
+  - name: Create the ZDP Core User if it doesn't exist and Grant permissions
+    command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} -e \"GRANT ALL ON {{ zdp_db_name }}.* TO \'{{ zdp_db_user}}\'@\'%\' IDENTIFIED BY \'{{ zdp_db_password }}\' ; flush privileges\""
+
+  - name: Create the ZDP Core User for localhost if it doesn't exist and Grant permissions
+    command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} -e \"GRANT ALL ON {{ zdp_db_name }}.* TO \'{{ zdp_db_user}}\'@\'localhost\' IDENTIFIED BY \'{{ zdp_db_password }}\' ; flush privileges\""
+
+  - name: Create the ZDP Core User for hostname if it doesn't exist and Grant permissions
+    command: "mysql -u{{mysql_admin_user}} -p{{mysql_admin_password}} -e \"GRANT ALL ON {{ zdp_db_name }}.* TO \'{{ zdp_db_user}}\'@\'{{ zdp_gateway_hostname }}\' IDENTIFIED BY \'{{ zdp_db_password }}\' ; flush privileges\""

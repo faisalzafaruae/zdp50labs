@@ -1,0 +1,9 @@
+---
+  - name: pre-install setup playbook
+    import_playbook: zdp-package-install-playbook.yml
+
+  - name: zdp install playbook
+    import_playbook: zdp-package-post-install-playbook.yml
+
+  - name: zdp service startup playbook
+    import_playbook: zdp-package-startup-playbook.yml

@@ -1,0 +1,7 @@
+- name: Fetch Node version
+  shell: node --version 2>&1 | sed 's/v//g' | grep \\.
+  register: node_version
+- assert:
+    that:
+      - node_version.stdout is version('6.0', '>=')
+    msg: "Unsupported nodejs version. Found {{node_version.stdout }}"

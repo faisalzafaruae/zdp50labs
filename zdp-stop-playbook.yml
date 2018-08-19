@@ -1,0 +1,97 @@
+---
+- hosts: registry
+  tasks:
+  - name: Stop zdp-registry
+    become: yes
+    service:
+      name: zdp-registry
+      state: stopped
+
+
+- hosts: es
+  tasks:
+  - name: Stop zdp-es
+    become: yes
+    service:
+      name: zdp-es
+      state: stopped
+
+- hosts: activemq
+  tasks:
+  - name: Stop zdp-activemq
+    become: yes
+    service:
+      name: zdp-activemq
+      state: stopped
+
+- hosts: logstash
+  tasks:
+  - name: Stop zdp-logstash
+    become: yes
+    service:
+      name: zdp-logstash
+      state: stopped
+
+- hosts: lineage
+  tasks:
+  - name: Stop zdp-lineage
+    become: yes
+    service:
+      name: zdp-lineage
+      state: stopped
+
+- hosts: gateway
+  tasks:
+  - name: Stop zdp-gateway
+    become: yes
+    service:
+      name: zdp-gateway
+      state: stopped
+
+- hosts: ingestion-warden
+  tasks:
+  - name: Stop zdp-ingestion-warden
+    become: yes
+    service:
+      name: zdp-ingestion-warden
+      state: stopped
+
+- hosts: executor
+  tasks:
+  - name: Stop zdp-executor
+    become: yes
+    service:
+      name: zdp-executor
+      state: stopped
+
+- hosts: kibana
+  tasks:
+  - name: Stop zdp-kibana
+    become: yes
+    service:
+      name: zdp-kibana
+      state: stopped
+
+- hosts: mr
+  tasks:
+  - name: Stop zdp-mr
+    become: yes
+    service:
+      name: zdp-mr
+      state: stopped
+
+- hosts: spark
+  tasks:
+  - name: Stop zdp-spark
+    become: yes
+    service:
+      name: zdp-spark
+      state: stopped
+
+- hosts: hive
+  tasks:
+  - name: Stop zdp-hive
+    become: yes
+    service:
+      name: zdp-hive
+      state: stopped

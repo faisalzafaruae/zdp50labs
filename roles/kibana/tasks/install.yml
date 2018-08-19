@@ -1,0 +1,49 @@
+---
+#  - name: Copy kibana package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-kibana-4.5.4.0-1.noarch.rpm"
+
+  - name: Install kibana in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-kibana"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-kibana/zdp-kibana.yml
+        key: eureka.client.service.url.defaultZone
+        value: "http://admin:{{registry_admin_password}}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+
+# Execute if zdp_ssl_enable is set to True
+  - name: Set elasticsearch.ssl.cert value
+    become: True
+    yedit:
+        src: /etc/zdp-kibana/kibana.yml
+        key: elasticsearch.ssl.cert
+        value: "{{ zdp_ssl_certificate_path }}"
+    when: zdp_ssl_enable == True
+
+
+  - name: Set elasticsearch.ssl.key value
+    become: True
+    yedit:
+        src: /etc/zdp-kibana/kibana.yml
+        key: elasticsearch.ssl.key
+        value: "{{ zdp_ssl_key_store }}"
+    when: zdp_ssl_enable == True
+
+
+  - name: Add node value to kibana file
+    lineinfile:
+        path: /opt/zdp/zdp-kibana/config/zdp-kibana.conf
+        line: "NODE=/usr/bin/node"
+        backup: no
+

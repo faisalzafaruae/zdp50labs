@@ -1,0 +1,15 @@
+---
+#  - name: Copy activemq package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-activemq-5.13.0.0-1.noarch.rpm"
+
+  - name: Install activemq in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-activemq"

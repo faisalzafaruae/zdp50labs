@@ -1,0 +1,10 @@
+---
+# This is a custom task that disables TLS (aka HTTPS) on ZDP Registry, and removes any keys.
+
+- name: encrypt
+  command: /opt/zdp/zdp-registry/bin/encrypt.sh password={{encrypt_password}} input={{input}} verbose=false
+  register: std
+  become: yes
+
+- set_fact:
+    output: "{{ std.stdout }}"

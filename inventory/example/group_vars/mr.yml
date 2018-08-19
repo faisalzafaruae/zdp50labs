@@ -1,0 +1,16 @@
+---
+## MAP REDUCE PARAMETERS for zdp map-reduce executor yml files
+mrexecutor_fs_default_uri: hdfs://hdp-node2.vemuri.zalonilabs.com:8020
+mrexecutor_jdbc_hive_url: jdbc:hive2://hdp-node3.vemuri.zalonilabs.com:10000/
+mrexecutor_jdbc_hive_username: zaloni
+mrexecutor_jdbc_hive_password: zaloni.1234
+mrexecutor_jdbc_hive_driver: org.apache.hive.jdbc.HiveDriver
+mrexecutor_jdbc_spark_url: jdbc:hive2://hdp-node2.vemuri.zalonilabs.com:10015/
+mrexecutor_jdbc_spark_username: zaloni
+mrexecutor_jdbc_spark_password: zaloni.1234
+## MAP REDUCE PARAMETERS for /etc/sysconfig/zdp-mr
+mrexecutor_hadoop_conf_dir: /etc/hadoop/conf
+mrexecutor_sparkHome: /usr/hdp/current/spark2-client/
+mrexecutor_hive_lib: /usr/hdp/current/hive-client/lib/*.jar
+mrexecutor_hive_conf: /etc/hive/conf
+mrexecutor_hcatalog_lib: /usr/hdp/current/hive-webhcat/share/hcatalog/*.jar

@@ -1,0 +1,160 @@
+---
+#  - name: Copy mr package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-mr-5.0.0_FINAL.0-1.noarch.rpm"
+
+  - name: Install mr in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-mr"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-mr/bootstrap-prod.yml
+        key: jhipster.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-mr/bootstrap-prod.yml
+        key: spring.cloud.config.uri
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/config"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: eureka.instance.service-url.defaultZone
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+
+## CONFIGURE MR-EXECUTOR YML FILE
+  - name: Configure zdp-mr.yml (STEP 1 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: fs.default.uri
+        value: "{{ mrexecutor_fs_default_uri }}"
+
+  - name: Configure zdp-mr.yml (STEP 2 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.hive.url
+        value: "{{ mrexecutor_jdbc_hive_url }}"
+
+  - name: Configure zdp-mr.yml (STEP 3 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.hive.username
+        value: "{{ mrexecutor_jdbc_hive_username }}"
+
+  - name: Configure zdp-mr.yml (STEP 4 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.hive.password
+        value: "{{ mrexecutor_jdbc_hive_password }}"
+
+  - name: Configure zdp-mr.yml (STEP 5 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.hive.driver
+        value: "{{ mrexecutor_jdbc_hive_driver }}"
+
+  - name: Configure zdp-mr.yml (STEP 6 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.spark.url
+        value: "{{ mrexecutor_jdbc_spark_url }}"
+
+  - name: Configure zdp-mr.yml (STEP 7 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.spark.username
+        value: "{{ mrexecutor_jdbc_spark_username }}"
+
+  - name: Configure zdp-mr.yml (STEP 8 of 8)
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: jdbc.spark.password
+        value: "{{ mrexecutor_jdbc_spark_password }}"
+
+## CONFIGURE /etc/sysconfig/zdp-mr
+  - name: Configure zdp-mr environment (STEP 1 of 5)
+    become: True
+    replace:
+        path: /etc/sysconfig/zdp-mr
+        regexp: '^hadoop_conf_dir='
+        replace: 'hadoop_conf_dir={{ mrexecutor_hadoop_conf_dir }}'
+        backup: no
+
+  - name: Configure zdp-mr environment (STEP 2 of 5)
+    become: True
+    replace:
+        path: /etc/sysconfig/zdp-mr
+        regexp: '^sparkHome='
+        replace: 'sparkHome={{ mrexecutor_sparkHome }}'
+        backup: no
+
+  - name: Configure zdp-mr environment (STEP 3 of 5)
+    become: True
+    replace:
+        path: /etc/sysconfig/zdp-mr
+        regexp: '^hive_lib='
+        replace: 'hive_lib={{ mrexecutor_hive_lib }}'
+        backup: no
+
+  - name: Configure zdp-mr environment (STEP 4 of 5)
+    become: True
+    replace:
+        path: /etc/sysconfig/zdp-mr
+        regexp: '^hive_conf='
+        replace: 'hive_conf={{ mrexecutor_hive_conf }}'
+        backup: no
+
+  - name: Configure zdp-mr environment (STEP 5 of 5)
+    become: True
+    replace:
+        path: /etc/sysconfig/zdp-mr
+        regexp: '^hcatalog_lib='
+        replace: 'hcatalog_lib={{ mrexecutor_hcatalog_lib }}'
+        backup: no
+
+# Changes in case kerberos needs to be configured in zdp
+  - name: Add keytab location to zdp-mr.yml
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: keytab.location
+        value: "{{ zdp_keytab_location }}"
+    when: zdp_kerberos_enable == True
+
+  - name: Add keytab principal to zdp-mr.yml
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: keytab.principal
+        value: "{{ zdp_kerberos_principal }}"
+    when: zdp_kerberos_enable == True
+
+  - name: Add krb5 conf location to zdp-mr.yml
+    become: True
+    yedit:
+        src: /etc/zdp-mr/zdp-mr.yml
+        key: kerberos.conf.location
+        value: "{{ zdp_krb_conf_location }}"
+    when: zdp_kerberos_enable == True

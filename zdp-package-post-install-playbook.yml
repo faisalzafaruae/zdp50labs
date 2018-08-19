@@ -1,0 +1,57 @@
+---
+- hosts: registry
+  tasks:
+  - name: Set nproc for zaloni user
+    pam_limits:
+        domain: zaloni
+        limit_item: nproc
+        limit_type: '-'
+        value: 9000
+  become: true
+
+
+- hosts: registry
+  tasks:
+  - name: Set nofile for zaloni user
+    pam_limits:
+        domain: zaloni
+        limit_item: nofile
+        limit_type: '-'
+        value: 65536
+  become: true
+  #connection: local
+
+
+- hosts: mysql
+  tasks:
+  - name: Set nproc for mysql user
+    pam_limits:
+        domain: mysql
+        limit_item: nproc
+        limit_type: '-'
+        value: 9000
+  become: true
+  #connection: local
+
+
+- hosts: mysql
+  tasks:
+  - name: Set nofile for mysql user
+    pam_limits:
+        domain: mysql
+        limit_item: nofile
+        limit_type: '-'
+        value: 65536
+  become: true
+  #connection: local
+
+- hosts: registry
+  tasks:
+  - name: Import the custom truststore to the Java truststore location
+    command: "keytool -importkeystore -srckeystore  {{ zdp_ssl_trust_store }}  -destkeystore  ${JAVA_HOME}/jre/lib/security/cacerts -deststorepass {{ zdp_ssl_dest_keystore_password }}"
+    when: zdp_ssl_enable == True
+  become: true
+  #connection: local
+
+
+

@@ -1,0 +1,150 @@
+---
+#  - name: Copy gateway package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-gateway-5.0.0_FINAL.0-1.noarch.rpm"
+
+
+
+  - name: Install gateway in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-gateway"
+
+
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/bootstrap-prod.yml
+        key: jhipster.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/bootstrap-prod.yml
+        key: spring.cloud.config.uri
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/config"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.service-url.defaultZone
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+  - name: Configure zdp gateway
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.port
+        value: "{{ zdp_gateway_port }}"
+    when: zdp_gateway_port is defined
+
+
+# Execute if zdp_ssl_enable is set to True
+  - name: Set nonSecurePortEnabled to false
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.nonSecurePortEnabled
+        value: false
+    when: zdp_ssl_enable == True
+
+
+  - name: Set securePortEnabled to true
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.securePortEnabled
+        value: true
+    when: zdp_ssl_enable == True
+
+  - name: Set prefer-ip-address to true
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.prefer-ip-address
+        value: false
+    when: zdp_ssl_enable == True
+
+  - name: Set securePort value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.securePort
+        value: "{{ zdp_gateway_port }}"
+    when: zdp_ssl_enable == True
+
+  - name: Set hostname value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.hostname
+        value: "{{ zdp_gateway_hostname }}"
+    when: zdp_ssl_enable == True
+
+  - name: Set statusPageUrl value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.statusPageUrl
+        value: "https://${eureka.instance.hostname}:${eureka.instance.securePort}/management/info"
+    when: zdp_ssl_enable == True
+
+  - name: Set homePageUrl value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.homePageUrl
+        value: "https://${eureka.instance.hostname}:${eureka.instance.securePort}/"
+    when: zdp_ssl_enable == True
+
+
+  - name: Set healthCheckUrl value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.healthCheckUrl
+        value: "https://${eureka.instance.hostname}:${eureka.instance.securePort}/management/health"
+    when: zdp_ssl_enable == True
+
+
+  - name: Set key-store value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.ssl.key-store
+        value: "{{ zdp_ssl_key_store }}"
+    when: zdp_ssl_enable == True
+
+
+  - name: Set key-store-password value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.ssl.key-store-password
+        value: "{{ zdp_ssl_key_store_password }}"
+    when: zdp_ssl_enable == True
+
+  - name: Set keyStoreType value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.ssl.keyStoreType
+        value: "{{ zdp_ssl_key_store_type }}"
+    when: zdp_ssl_enable == True
+
+  - name: Set keyAlias value
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.ssl.keyAlias
+        value: "{{ zdp_ssl_key_alias }}"
+    when: zdp_ssl_enable == True

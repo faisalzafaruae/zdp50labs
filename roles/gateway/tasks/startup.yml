@@ -1,0 +1,46 @@
+---
+  - name: Copy gateway package to tmp directory
+    copy:
+        src: /tmp/zdp_rpm_packages/{{item}}
+        dest: /tmp/zdp_install_temp_dir
+    with_items:
+        - "zdp-gateway-5.0.0_FINAL.0-1.noarch.rpm"
+
+  - name: Install gateway in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "zdprepo"
+        skip_broken: yes
+    with_items:
+        - "zdp-gateway"
+
+
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/bootstrap-prod.yml
+        key: jhipster.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/bootstrap-prod.yml
+        key: spring.cloud.config.uri
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/config"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: eureka.instance.service-url.defaultZone
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+  - name: Configure zdp gateway
+    become: True
+    yedit:
+        src: /etc/zdp-gateway/zdp-gateway.yml
+        key: server.port
+        value: "{{ zdp_gateway_port }}"
+    when: zdp_gateway_port is defined

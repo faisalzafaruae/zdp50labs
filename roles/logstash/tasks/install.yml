@@ -1,0 +1,31 @@
+---
+#  - name: Copy logstash package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-logstash-5.4.0.0-1.noarch.rpm"
+
+  - name: Install logstash in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-logstash"
+
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-logstash/zdp-logstash.yml
+        key: zdp.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-logstash/zdp-logstash.yml
+        key: zdp.registry.config.url
+        value: "http://{{ groups['registry']|join(',') }}:8761/config/master/application"
+

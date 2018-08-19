@@ -1,0 +1,83 @@
+---
+# This playbook checks each host and checks if the
+# necessary prerequisites are setup to install ZDP
+- hosts: registry
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: es
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: activemq
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: logstash
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: lineage
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: gateway
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: ingestion-warden
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: executor
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+
+- hosts: kibana
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-nodejs
+
+- hosts: mr
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+  - include_role:
+      name: common
+      tasks_from: check-hadoop
+
+- hosts: spark
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+  - include_role:
+      name: common
+      tasks_from: check-hadoop
+
+- hosts: hive
+  tasks:
+  - include_role:
+      name: common
+      tasks_from: check-java
+  - include_role:
+      name: common
+      tasks_from: check-hadoop

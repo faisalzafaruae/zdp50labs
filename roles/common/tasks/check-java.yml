@@ -1,0 +1,17 @@
+- name: Fetch Java version
+  when: java_home is not defined
+  shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g' | grep 1
+  register: java_version
+
+- name: Fetch Java version
+  when: java_home is defined
+  shell: "{{java_home}}/bin/java -version 2>&1 | grep version | awk '{print $3}' | sed 's/\"//g' | grep 1"
+  register: java_version
+
+- assert:
+    that:
+      - java_version.stdout is version('1.8', '>=')
+    msg: "Unsupported Java version. Found {{java_version.stdout }}"
+
+
+

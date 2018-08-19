@@ -1,0 +1,60 @@
+---
+#  - name: Copy ingestion-warden package to tmp directory
+#    copy:
+#        src: /tmp/zdp_rpm_packages/{{item}}
+#        dest: /tmp/zdp_install_temp_dir
+#    with_items:
+#        - "zdp-ingestion-warden-5.0.0_FINAL.0-1.noarch.rpm"
+
+  - name: Install ingestion-warden in server from local yum repository
+    yum:
+        name: "{{item}}"
+        enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-ingestion-warden"
+
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-ingestion-warden/bootstrap-prod.yml
+        key: jhipster.registry.password
+        value: "{{registry_admin_password}}"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-ingestion-warden/bootstrap-prod.yml
+        key: spring.cloud.config.uri
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/config"
+
+  - name: Configure with Registry
+    become: True
+    yedit:
+        src: /etc/zdp-ingestion-warden/zdp-ingestion-warden.yml
+        key: eureka.instance.service-url.defaultZone
+        value: "http://admin:${jhipster.registry.password}@{{ groups['registry']|join(',') }}:8761/eureka/"
+
+
+# Execute if zdp_ssl_enable is set to True
+  - name: Set JAVA_OPTS parameters
+    lineinfile:
+        path: /etc/sysconfig/zdp-ingestion-warden
+        line: "JAVA_OPTS=\"-Djavax.net.ssl.trustStore={{ zdp_ssl_trust_store }} -Djavax.net.ssl.trustStoreType={{ zdp_ssl_key_store_type }} -Djavax.net.ssl.trustStorePassword={{ zdp_ssl_key_store_password }} -Djavax.net.debug=ssl\""
+    when: zdp_ssl_enable == True
+
+
+  - name: Modify file dca-launch.sh for ssl [1]
+    replace:
+        path: /opt/zdp/zdp-ingestion-warden/bin/agents/bdca/dca-launch.sh
+        regexp: '^echo \"java\s+'
+        replace: 'echo \"java -Djavax.net.ssl.trustStore={{ zdp_ssl_trust_store }} -Djavax.net.ssl.trustStorePassword={{ zdp_ssl_key_store_password }}'
+        backup: no
+
+  - name: Modify file dca-launch.sh for ssl [1]
+    replace:
+        path: /opt/zdp/zdp-ingestion-warden/bin/agents/bdca/dca-launch.sh
+        regexp: '^nohup java\s+'
+        replace: 'nohup java -Djavax.net.ssl.trustStore={{ zdp_ssl_trust_store }} -Djavax.net.ssl.trustStorePassword={{ zdp_ssl_key_store_password }}'
+        backup: no
