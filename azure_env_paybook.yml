@@ -6,7 +6,7 @@
   tasks:
     - name: Deploy Hortonworks Template
       azure_rm_deployment:
-      state: present
-      resource_group_name: ZDPPOC-DEV
-      template_link:   './azure-templates/zdptempalte.json'
-      parameters_link: './azure-templates/parameters.json'
+        state: present
+        resource_group_name: ZDPPOC-DEV
+        template_link:   './azure-templates/zdptempalte.json'
+        parameters_link: './azure-templates/parameters.json'
