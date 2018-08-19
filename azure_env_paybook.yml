@@ -6,6 +6,8 @@
   tasks:
     - name: Deploy Hortonworks Template
       azure_rm_deployment:
+        deployment_name: "zdpLabDeployment"
+        location: westeurope
         state: present
         resource_group_name: zdptraining
         parameters_link: 'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/parameters.json'
