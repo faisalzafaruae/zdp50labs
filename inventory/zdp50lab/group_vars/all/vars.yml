@@ -1,6 +1,6 @@
 # All common properties for the ZDP Installer
 ---
-ansible_user: mjkaushik
+ansible_user: zaloni
 
 # Temporary location where the rpms are placed
 zdp_package_temp_location: /tmp/zdp_install_temp_dir
@@ -11,8 +11,9 @@ zdp_package_temp_location: /tmp/zdp_install_temp_dir
 # Target - RPMs are picked up from the remote hosts from the  {{zdp_rpms_location_on_target_server}} directory
 # Yum - RPMs are installed from a yum repository. remote hosts are assumed to be configured with yum
 # Network - RPM's are downloaded from a http url defined by {{zdp_rpms_http_location}}
-zdp_rpms_location: Yum
+zdp_rpms_location: Control
 zdp_yum_repository_name: zdptestrepo
+zdp_rpms_location_on_control_server: '/home/zaloni/zdprpms'
 
 #MYSL zdp database details
 # Which database should ZDP use?
@@ -44,11 +45,11 @@ zdp_ssl_dest_keystore_password: "zaloni.1234"
 
 #KERBEROS Details to work with ZDP
 # Set "True" if kerberos needs to be enabled for zdp or else set "True"
-zdp_kerberos_enable: True
+zdp_kerberos_enable: False
 zdp_keytab_location: /etc/security/keytabs/zaloni.keytab
-zdp_kerberos_principal: zaloni@HDP.BORDEAUX.ORG
+zdp_kerberos_principal: zaloni@sandbox-hdp.hortonworks.com
 zdp_krb_conf_location: /etc/krb5.conf
 
 # ZDP gateway port
-zdp_gateway_port: 8080
-zdp_gateway_hostname: zaloni-02.bordeaux.org
+zdp_gateway_port: 9090
+zdp_gateway_hostname: sandbox-hdp.hortonworks.com
