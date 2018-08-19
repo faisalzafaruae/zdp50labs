@@ -51,13 +51,13 @@
             value: "Basic"
       register: azure
 
-    - name: Add new instance to host group
-      add_host:
-        hostname: "{{ item['ips'][0].public_ip }}"
-        groupname: azure_vms
-      with_items: "{{ azure.deployment.instances }}"
-
-- hosts: azure_vms
-    tasks:
-      - name: echo the hostname of the vm
-        shell: hostname
+#    - name: Add new instance to host group
+#      add_host:
+#        hostname: "{{ item['ips'][0].public_ip }}"
+#        groupname: azure_vms
+#      with_items: "{{ azure.deployment.instances }}"
+#
+#- hosts: azure_vms
+#    tasks:
+#      - name: echo the hostname of the vm
+#        shell: hostname
