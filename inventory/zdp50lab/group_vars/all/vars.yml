@@ -1,6 +1,6 @@
 # All common properties for the ZDP Installer
 ---
-ansible_user: zaloni
+ansible_user: root
 
 # Temporary location where the rpms are placed
 zdp_package_temp_location: /tmp/zdp_install_temp_dir
