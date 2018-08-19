@@ -19,7 +19,8 @@
           virtualMachineName:
             value: "zdp-gateway"        
           virtualMachineSize:
-            value: "Standard_DS13-4_v2"
+            value: "Standard_E16-8s_v3"
+            #value: "Standard_DS13-4_v2"  4 Core 56 GB
           adminUsername: 
             value: "zaloni"
           virtualNetworkName: 
