@@ -14,7 +14,7 @@
     file:
         path: /opt/zdp/zdp-cacerts
         state: directory
-        owner: zaloni
+        owner: {{ansible_user}}
   become: true
 
   
