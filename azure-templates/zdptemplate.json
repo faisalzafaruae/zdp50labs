@@ -194,6 +194,10 @@
             "apiVersion": "2018-01-01",
             "location": "[parameters('location')]",
             "properties": {
+                "dnsSettings": {
+                    "domainNameLabel": "zdp50demo",
+                    "fqdn": "zdp50demo.westeurope.cloudapp.azure.com"
+                },
                 "securityRules": [
                     {
                         "name": "SSH",
