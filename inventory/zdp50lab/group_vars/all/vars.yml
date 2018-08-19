@@ -33,7 +33,7 @@ encrypt_password: "{{ vault_encrypt_password }}"
 
 #SSL Details in case of HTTPS SETUP
 # Set "True" if ssl needs to be enabled for zdp or else set "True"
-zdp_ssl_enable: False
+zdp_ssl_enable: false
 zdp_ssl_key_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"
 zdp_ssl_trust_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.jks"
 zdp_ssl_certificate_path: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"

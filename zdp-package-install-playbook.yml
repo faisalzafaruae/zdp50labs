@@ -30,6 +30,7 @@
         - "zdpdoc-n3.zalonilabs.com.p12"
         - "zdpdoc-n3.zalonilabs.com.jks"
         - "zdpdoc-n3.zalonilabs.com.key"
+    when: zdp_ssl_enable
   become: true
 #  #connection: local
 
