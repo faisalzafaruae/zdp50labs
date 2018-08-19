@@ -8,5 +8,5 @@
       azure_rm_deployment:
         state: present
         resource_group_name: ZDPPOC-DEV
-        template_link:   './azure-templates/zdptempalte.json'
-        parameters_link: './azure-templates/parameters.json'
+        template_link:   'https://github.com/faisalzafaruae/zdp50labs/blob/master/azure-templates/zdptemplate.json'
+        parameters_link: 'https://github.com/faisalzafaruae/zdp50labs/blob/master/azure-templates/parameters.json'
