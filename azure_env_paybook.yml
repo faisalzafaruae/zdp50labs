@@ -57,7 +57,7 @@
         groupname: azure_vms
       with_items: "{{ azure.deployment.instances }}"
 
- - hosts: azure_vms
+  hosts: azure_vms
       user: devopscle
       tasks:
         - name: echo the hostname of the vm
