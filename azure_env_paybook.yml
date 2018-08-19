@@ -13,6 +13,10 @@
         #parameters_link: 'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/parameters.json'
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters: 
+          location: 
+            value: "westeurope"
+          resourceGroup:
+            value: "zdptraining"
           virtualMachineName:
             value: "zdp-gateway"        
           virtualMachineSize:
