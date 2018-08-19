@@ -7,6 +7,6 @@
     - name: Deploy Hortonworks Template
       azure_rm_deployment:
         state: present
-        resource_group_name: ZDPPOC-DEV
+        resource_group_name: zdptraining
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters_link: 'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/parameters.json'
