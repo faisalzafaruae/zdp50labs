@@ -1,0 +1,1 @@
+ansible-playbook azure_env_playbook.yml -i inventory/zdp50lab
