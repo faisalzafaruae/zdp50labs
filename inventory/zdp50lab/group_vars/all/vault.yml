@@ -10,3 +10,4 @@ vault_jdbc_hive_password: hive
 vault_registry_admin_password: admin
 # The encryption key for the registry
 vault_encrypt_password: changeme
+vault_azurevm_password: Dubai@202020
