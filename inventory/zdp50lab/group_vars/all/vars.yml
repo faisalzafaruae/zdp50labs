@@ -58,5 +58,5 @@ zdp_gateway_hostname: sandbox-hdp.hortonworks.com
 # HDP Sandbox Variables
 hdpvm_resource_group: zdptraining2
 hdpvm_resource_location: westeurope
-hdpvm_machine_name: zdp-vm
+hdpvm_machine_name: zdp-vm2
 hdpvm_machine_size: Standard_E16-8s_v3
