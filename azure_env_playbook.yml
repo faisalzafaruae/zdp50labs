@@ -9,13 +9,13 @@
         deployment_name: "zdpLabDeployment"
         location: "{{ hdpvm_resource_location }}"
         state: present
-        resource_group_name: "{{ hdpvm_resource_group }}"
+        resource_group_name: "zdptrainings"
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters: 
           location: 
             value: "{{ hdpvm_resource_location }}"
           resourceGroup:
-            value: "{{ hdpvm_resource_group }}"
+            value: "zdptrainings"
           virtualMachineName:
             value: "{{ hdpvm_machine_name }}"       
           virtualMachineSize:
