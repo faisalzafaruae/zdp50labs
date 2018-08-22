@@ -64,4 +64,4 @@ hdpvm_machine_size: Standard_E16-8s_v3
 hdpvm_admin_username: zaloni 
 hdpvm_admin_password: Dubai@202020
 hdpvm_dns_name: zdpdubaidemo
-hdpvm_dns_fqdn: "{{ hdpvm_dns_name }}"."{{ hdpvm_resource_location }}".cloudapp.azure.com
+hdpvm_dns_fqdn: "{{ hdpvm_dns_name }}.{{ hdpvm_resource_location }}.cloudapp.azure.com"
