@@ -1,0 +1,4 @@
+---
+## AZURE VM PARAMETERS for Hortonworks Sandbox VM
+hdpvm_resource_group: zdptraining
+

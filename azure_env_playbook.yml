@@ -9,13 +9,13 @@
         deployment_name: "zdpLabDeployment"
         location: westeurope
         state: present
-        resource_group_name: zdptraining
+        resource_group_name: "{{ hdpvm_resource_group }}"
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters: 
           location: 
             value: "westeurope"
           resourceGroup:
-            value: "zdptraining"
+            value: "{{ hdpvm_resource_group }}"
           virtualMachineName:
             value: "zdp-gateway"        
           virtualMachineSize:
