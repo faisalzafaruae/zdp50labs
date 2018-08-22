@@ -7,20 +7,19 @@
     - name: Deploy Hortonworks Template
       azure_rm_deployment:
         deployment_name: "zdpLabDeployment"
-        location: westeurope
+        location: "{{ hdpvm_resource_location }}"
         state: present
         resource_group_name: "{{ hdpvm_resource_group }}"
         template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
         parameters: 
           location: 
-            value: "westeurope"
+            value: "{{ hdpvm_resource_location }}"
           resourceGroup:
             value: "{{ hdpvm_resource_group }}"
           virtualMachineName:
-            value: "zdp-gateway"        
+            value: "{{ hdpvm_machine_name }}"       
           virtualMachineSize:
-            value: "Standard_E16-8s_v3"
-            #value: "Standard_DS13-4_v2"  4 Core 56 GB
+            value: "{{ hdpvm_machine_size }}"
           adminUsername: 
             value: "zaloni"
           virtualNetworkName: 
