@@ -51,7 +51,7 @@
           domainNameLabel: 
             value: "{{ hdpvm_dns_name }}"
           domainFQDN:
-            value: "zdp501demo.westeurope.cloudapp.azure.com"
+            value: "{{ hdpvm_dns_fqdn }}"
       register: azure
 
 #    - name: Add new instance to host group
