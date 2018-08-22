@@ -56,7 +56,8 @@ zdp_gateway_hostname: sandbox-hdp.hortonworks.com
 
 
 # HDP Sandbox Variables
-hdpvm_resource_group: zdptraining2
+hdpvm_resource_group: zdptraining
 hdpvm_resource_location: westeurope
-hdpvm_machine_name: zdp-vm2
+hdpvm_machine_name: zdp-gateway
 hdpvm_machine_size: Standard_E16-8s_v3
+#hdpvm_machine_size: Standard_DS13-4_v2 #4 Core 56 GB Use this for smaller vm size 

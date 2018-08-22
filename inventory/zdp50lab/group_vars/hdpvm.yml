@@ -1,8 +1,0 @@
----
-## AZURE VM PARAMETERS for Hortonworks Sandbox VM
-hdpvm_resource_group: zdptraining
-hdpvm_resource_location: westeurope
-hdpvm_machine_name: zdp-vm
-hdpvm_machine_size: Standard_E16-8s_v3
-  
-#hdpvm_machine_size: Standard_DS13-4_v2 #4 Core 56 GB
