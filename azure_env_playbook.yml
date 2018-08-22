@@ -21,7 +21,7 @@
           virtualMachineSize:
             value: "{{ hdpvm_machine_size }}"
           adminUsername: 
-            value: "zaloni"
+            value: "{{ hdpvm_admin_username }}"
           virtualNetworkName: 
             value: "ZDP50Demo-vnet"
           networkInterfaceName:
@@ -29,7 +29,7 @@
           networkSecurityGroupName:
             value: "ZDP-50-nsg"
           adminPassword:
-            value: "Dubai@202092"
+            value: "{{ hdpvm_admin_password }}"
           diagnosticsStorageAccountName:
             value: "zdiag"
           diagnosticsStorageAccountType:
