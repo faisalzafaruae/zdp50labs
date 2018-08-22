@@ -48,6 +48,10 @@
             value: "Static"
           publicIpAddressSku:
             value: "Basic"
+          domainNameLabel: 
+            value: "zdp501demo"
+          domainFQDN:
+            value: "zdp501demo.westeurope.cloudapp.azure.com"
       register: azure
 
 #    - name: Add new instance to host group

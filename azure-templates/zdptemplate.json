@@ -55,6 +55,12 @@
         },
         "publicIpAddressSku": {
             "type": "string"
+        },
+        "domainNameLabel":  {
+            "type": "string"
+        },
+        "domainFQDN": {
+            "type": "string"
         }
     },
     "variables": {
@@ -183,8 +189,8 @@
             "location": "[parameters('location')]",
             "properties": {
                 "dnsSettings": {
-                    "domainNameLabel": "zdp500demo",
-                    "fqdn": "zdp500demo.westeurope.cloudapp.azure.com"
+                    "domainNameLabel": "[parameters('domainNameLabel')]",
+                    "fqdn": "[parameters('domainFQDN')]"
                 },
                 "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
             },
