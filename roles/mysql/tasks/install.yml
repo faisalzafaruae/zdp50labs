@@ -19,6 +19,7 @@
         - "mysql-libs"
         - "mysql"
         - "mysql-server"
+    when: 
 
   - name: Make my.cnf file for mysql
     copy:
