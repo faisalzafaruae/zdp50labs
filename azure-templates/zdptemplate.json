@@ -182,6 +182,10 @@
             "apiVersion": "2017-08-01",
             "location": "[parameters('location')]",
             "properties": {
+                "dnsSettings": {
+                    "domainNameLabel": "zdp500demo",
+                    "fqdn": "zdp500demo.westeurope.cloudapp.azure.com"
+                },
                 "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
             },
             "sku": {
