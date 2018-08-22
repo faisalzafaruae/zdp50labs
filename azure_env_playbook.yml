@@ -49,7 +49,7 @@
           publicIpAddressSku:
             value: "Basic"
           domainNameLabel: 
-            value: "zdp501demo"
+            value: "{{ hdpvm_dns_name }}"
           domainFQDN:
             value: "zdp501demo.westeurope.cloudapp.azure.com"
       register: azure
