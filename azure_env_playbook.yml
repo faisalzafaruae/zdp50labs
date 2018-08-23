@@ -4,7 +4,7 @@
   connection: local
   gather_facts: False
   tasks:
-    - name: Deploy Hortonworks Template
+    - name: Deploy Hortonworks Sandbox
       azure_rm_deployment:
         deployment_name: "zdpLabDeployment"
         location: "{{ hdpvm_resource_location }}"
