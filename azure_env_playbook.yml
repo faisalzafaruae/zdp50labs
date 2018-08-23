@@ -54,13 +54,24 @@
             value: "{{ hdpvm_dns_fqdn }}"
       register: azure
 
-#    - name: Add new instance to host group
-#      add_host:
-#        hostname: "{{ item['ips'][0].public_ip }}"
-#        groupname: azure_vms
-#      with_items: "{{ azure.deployment.instances }}"
+#    - name: Wait for port 22 to be ready
+#      hosts: myapp
+#      gather_facts: False
+#      tasks:
+#        - local_action: wait_for port=22 host="{{ ansible_ssh_host }}"  search_regex=OpenSSH delay=10
+#    - name: Next Task after SSH is UP
+#    - name: Display all variables/facts known for a host
+#      debug:
+#        var: hostvars[inventory_hostname]
+#        verbosity: 4
+    - name: Add new instance to host group
+      add_host:
+        hostname: "{{ item['ips'][0].public_ip }}"
+        groupname: azure_vms
+      with_items: "{{ azure.deployment.instances }}"
 
-#- hosts: azure_vms
-#    tasks:
-#      - name: echo the hostname of the vm
-#        shell: hostname
+
+- hosts: azure_vms
+    tasks:
+      - name: echo the hostname of the vm
+        shell: hostname
