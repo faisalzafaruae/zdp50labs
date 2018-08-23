@@ -1,8 +1,9 @@
 # Create or update a template deployment based on uris using parameter and template links
 
 - name: Wait for SSH and then print hostname
-  hosts: azure_vms
+  hosts: 104.214.220.231
   user: "{{ hdpvm_admin_username }}"
+  password: Zaloni@202092 
   tasks:
     - name: Wait for SSH to come up
       wait_for:
