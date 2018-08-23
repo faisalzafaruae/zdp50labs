@@ -70,9 +70,13 @@
         groupname: azure_vms
       with_items: "{{ azure.deployment.instances }}"
 
+    - name: Wait for 25 minutes to build Ambari 
+      pause:
+        minutes: 25
+
 - name: Wait for SSH and then print hostname
   hosts: azure_vms
-  user: devopscle
+  user: "{{ hdpvm_admin_username }}"
   tasks:
     - name: Wait for SSH to come up
       wait_for:
