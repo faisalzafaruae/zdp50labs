@@ -8,8 +8,12 @@
 #        - "mysql-community-libs-5.7.22-1.el7.x86_64.rpm"
 #        - "mysql-community-common-5.7.22-1.el7.x86_64.rpm"
 #        - "mysql-community-server-5.7.22-1.el7.x86_64.rpm"
-
+    
   - name: Install mysql in server from local yum repository
+    tasks:
+      - include_role:
+         name: common
+         tasks_from: check-mysql
     yum:
         name: "{{item}}"
         enablerepo: "{{zdp_yum_repository_name}}"
@@ -19,7 +23,7 @@
         - "mysql-libs"
         - "mysql"
         - "mysql-server"
-    when: 
+    when: mysql_version == 14.40
 
   - name: Make my.cnf file for mysql
     copy:

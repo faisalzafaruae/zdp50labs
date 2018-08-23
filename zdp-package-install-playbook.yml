@@ -15,6 +15,7 @@
         path: /opt/zdp/zdp-cacerts
         state: directory
         owner: "{{ ansible_user }}"
+    when: zdp_ssl_enable
   become: true
 
   
@@ -38,7 +39,7 @@
   tasks:
   - include_role:
      name: mysql
-     tasks_from: install
+     tasks_from: install 
   become: true
 #  #connection: local
 
