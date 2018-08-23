@@ -23,11 +23,11 @@
           adminUsername: 
             value: "{{ hdpvm_admin_username }}"
           virtualNetworkName: 
-            value: "ZDP50Demo-vnet"
+            value: "{{ hdpvm_vnet_name }}"
           networkInterfaceName:
-            value: "zdp-50222"
+            value: "{{ hdpvm_machine_networkInterface }}"
           networkSecurityGroupName:
-            value: "ZDP-50-nsg"
+            value: "{{ hdpvm_machine_networkSecurityGroup }}"
           adminPassword:
             value: "{{ hdpvm_admin_password }}"
           diagnosticsStorageAccountName:
@@ -43,7 +43,7 @@
           subnetPrefix:
             value: "10.0.1.0/24"
           publicIpAddressName: 
-            value: "ZDP-50-ip"
+            value: "{{hdpvm_machine_publicIPName}}"
           publicIpAddressType:
             value: "Static"
           publicIpAddressSku:
