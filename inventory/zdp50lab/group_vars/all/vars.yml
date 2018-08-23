@@ -59,8 +59,8 @@ zdp_gateway_hostname: sandbox-hdp.hortonworks.com
 hdpvm_resource_group: zdpfz  #Must be Unique accross all deployments 
 hdpvm_resource_location: westeurope
 hdpvm_machine_name: zdpvm-{{ hdpvm_resource_group }}
-#hdpvm_machine_size: Standard_E16-8s_v3  #8 Core 128GB 
-hdpvm_machine_size: Standard_DS13-4_v2 #4 Core 56 GB Use this for smaller vm size 
+hdpvm_machine_size: Standard_E16-8s_v3  #8 Core 128GB 
+#hdpvm_machine_size: Standard_DS13-4_v2 #4 Core 56 GB Use this for smaller vm size 
 hdpvm_admin_username: zaloni 
 hdpvm_admin_password: Dubai@202092
 hdpvm_machine_publicIPName: zdp-public-ip-{{ hdpvm_resource_group }}
