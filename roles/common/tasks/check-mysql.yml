@@ -1,0 +1,10 @@
+- name: Check Mysql is installed
+  shell: mysql --version 2>&1 | grep mysql | awk '{print $3}' | grep 1
+  register: mysql_version
+- assert:
+    that:
+      - mysql_version.stdout is version('14', '>=')
+    msg: "Unsupported Mysql version. Found {{mysql_version.stdout }}"
+
+
+
