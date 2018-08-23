@@ -6,7 +6,7 @@
   tasks:
     - name: Deploy Hortonworks Sandbox
       azure_rm_deployment:
-        deployment_name: "zdpLabDeployment"
+        deployment_name: "{{hdpvm_deployment_name}}"
         location: "{{ hdpvm_resource_location }}"
         state: present
         resource_group_name: "{{ hdpvm_resource_group }}"
@@ -43,7 +43,7 @@
           subnetPrefix:
             value: "10.0.1.0/24"
           publicIpAddressName: 
-            value: "{{hdpvm_machine_publicIPName}}"
+            value: "{{ hdpvm_machine_publicIPName }}"
           publicIpAddressType:
             value: "Static"
           publicIpAddressSku:
@@ -54,13 +54,29 @@
             value: "{{ hdpvm_dns_fqdn }}"
       register: azure
 
-#    - name: Add new instance to host group
-#      add_host:
-#        hostname: "{{ item['ips'][0].public_ip }}"
-#        groupname: azure_vms
-#      with_items: "{{ azure.deployment.instances }}"
-#
-#- hosts: azure_vms
-#    tasks:
-#      - name: echo the hostname of the vm
-#        shell: hostname
+#    - name: Wait for port 22 to be ready
+#      hosts: myapp
+#      gather_facts: False
+#      tasks:
+#        - local_action: wait_for port=22 host="{{ ansible_ssh_host }}"  search_regex=OpenSSH delay=10
+#    - name: Next Task after SSH is UP
+#    - name: Display all variables/facts known for a host
+#      debug:
+#        var: hostvars[inventory_hostname]
+#        verbosity: 4
+    - name: Add new instance to host group
+      add_host:
+        hostname: "{{ item['ips'][0].public_ip }}"
+        groupname: azure_vms
+      with_items: "{{ azure.deployment.instances }}"
+
+    - hosts: azure_vms
+      user: devopscle
+      tasks:
+        - name: Wait for SSH to come up
+          wait_for:
+            port: 22
+            timeout: 2000
+            state: started
+        - name: echo the hostname of the vm
+          shell: hostname
