@@ -9,10 +9,10 @@
 #        - "mysql-community-common-5.7.22-1.el7.x86_64.rpm"
 #        - "mysql-community-server-5.7.22-1.el7.x86_64.rpm"
  - name: Check Mysql is installed
-  tasks:
-  - include_role:
-      name: common
-      tasks_from: check-java
+   tasks:
+    - include_role:
+        name: common
+        tasks_from: check-mysql
 
   - name: Install mysql in server from local yum repository
     yum:
