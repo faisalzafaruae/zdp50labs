@@ -64,7 +64,7 @@ hdpvm_machine_size: Standard_DS13-4_v2 #4 Core 56 GB Use this for smaller vm siz
 hdpvm_admin_username: zaloni 
 hdpvm_admin_password: Dubai@202092
 hdpvm_machine_publicIPName: zdp-public-ip-{{ hdpvm_resource_group }}
-hdpvm_dns_name: zdpdubaidemo
+hdpvm_dns_name: "{{ hdpvm_resource_group }}"
 hdpvm_dns_fqdn: "{{ hdpvm_dns_name }}.{{ hdpvm_resource_location }}.cloudapp.azure.com"
 hdpvm_vnet_name: zdpvnet-{{ hdpvm_resource_group }}
 hdpvm_machine_networkInterface: zdp-ni-{{ hdpvm_resource_group }}
