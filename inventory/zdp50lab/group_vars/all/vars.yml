@@ -69,3 +69,4 @@ hdpvm_dns_fqdn: "{{ hdpvm_dns_name }}.{{ hdpvm_resource_location }}.cloudapp.azu
 hdpvm_vnet_name: zdpvnet-{{ hdpvm_resource_group }}
 hdpvm_machine_networkInterface: zdp-ni-{{ hdpvm_resource_group }}
 hdpvm_machine_networkSecurityGroup: zdp-nsg-{{ hdpvm_resource_group }}
+hdpvm_deployment_name: zdpLabDeployment-{{ hdpvm_resource_group }}

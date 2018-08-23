@@ -6,7 +6,7 @@
   tasks:
     - name: Deploy Hortonworks Sandbox
       azure_rm_deployment:
-        deployment_name: "zdpLabDeployment"
+        deployment_name: "{{hdpvm_deployment_name}}"
         location: "{{ hdpvm_resource_location }}"
         state: present
         resource_group_name: "{{ hdpvm_resource_group }}"
@@ -43,7 +43,7 @@
           subnetPrefix:
             value: "10.0.1.0/24"
           publicIpAddressName: 
-            value: "{{hdpvm_machine_publicIPName}}"
+            value: "{{ hdpvm_machine_publicIPName }}"
           publicIpAddressType:
             value: "Static"
           publicIpAddressSku:
