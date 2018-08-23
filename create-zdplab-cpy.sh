@@ -1,0 +1,2 @@
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook azure_cpy_playbook.yml -i inventory/zdp50lab
