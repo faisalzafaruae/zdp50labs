@@ -128,4 +128,10 @@
     - name: Installing ansible
       yum: name=ansible state=present
       
-      
+- name: Clone GIT Repo on the Gateway machine
+  hosts: azure_vms
+  vars:
+      ansible_user: "{{ hdpvm_admin_username }}"
+  tasks:
+    - name: Clone GIT Repo for ZDP Installation 
+      shell: git clone https://github.com/faisalzafaruae/zdp50labs.git
