@@ -89,6 +89,8 @@
   tasks:
     - name: echo the hostname of the vm
       shell: hostname
+    - name: create ssh-keygen on HDP Sandbox
+      shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
       
 - name: Install Ansible and Git on Gateway Remote Machine
   hosts: azure_vms
@@ -97,6 +99,9 @@
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
   tasks:
-    - name: Install git
+    - name: Installing git
       yum: name=git state=present
+    - name: Installing ansible
+      yum: name=ansible state=present
+      
       
