@@ -8,7 +8,7 @@
      shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
    - debug:
-       msg: "Key Value: {{ sshkeytext }}"
+       msg: "Key Value: {{ sshkeytext.stdout_lines }}"
      
 - name: Deploying Cloud Infrastructure
   hosts: localhost
@@ -64,7 +64,7 @@
           domainFQDN:
             value: "{{ hdpvm_dns_fqdn }}"
           sshKeyData:
-            value: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVNiYY3+nFOW9QnNPdxzA6IKP2FkaQnxbvWQu9F8kWccs4f0bxFR9mmB5BP4sZqDZKcw5wufo7Q/Sgo62LW51G6db3UI/2aabJQdjo4DRDwym2BMuvJoE+lXzLwBUnY3Fu28lk3Az5MlY87WTXB2gwKbZQCqf3X0ytMRIflZNTnYwW9tt006RiVzqykTfXtK//7BaoUhnlRFFFXyf8ZYYo5pztRtleSYNvdfgAH9xm+LETLcTwJYIBQ+1iCTVWVHJz+5hNawctTJv4xcD3zo8ntbfVRaye9zLswZIcdZH/ACQygr7SeG2sSZBZ43mkkPyOfFp0W9SG5RzkM8F66IRr faisal@cc-756bc55c-898bb6f5f-fdxd8
+            value: "{{ sshkeytext.stdout_lines }}"
       register: azure
 
 #    - name: Wait for port 22 to be ready
