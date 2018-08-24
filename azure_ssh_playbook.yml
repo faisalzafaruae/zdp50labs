@@ -1,4 +1,17 @@
 # Create or update a template deployment based on uris using parameter and template links
+- name: Genrate SSH Key if it is not present 
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+   - stat: path="~/.ssh/id_rsa.pub"
+     register: sshkeypath
+   - debug: var=sshkeypath
+   - name: Generate SSH Key 
+     shell: cat  ~/.ssh/id_rsa.pub
+     register: sshkeytext
+     when: sshkeypath.exists
+
 - name: Capturing value of sshkey
   hosts: localhost
   connection: local
