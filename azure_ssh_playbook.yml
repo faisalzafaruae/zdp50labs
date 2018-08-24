@@ -10,7 +10,7 @@
    - name: Generate SSH Key 
      shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
-     when: sshkeypath.exists
+     when: sshkeypath.stat.exists
 
 - name: Capturing value of sshkey
   hosts: localhost
