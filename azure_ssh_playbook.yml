@@ -5,7 +5,7 @@
   gather_facts: False
   tasks:
    - name: cat ssh key value
-     shell cat  ~/.ssh/id_rsa.pub
+     shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
   debug:
      msg: "Key Value: {{ sshkeytext }}"
