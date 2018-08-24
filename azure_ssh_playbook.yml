@@ -136,3 +136,11 @@
   tasks:
     - name: Clone GIT Repo for ZDP Installation 
       shell: git clone https://github.com/faisalzafaruae/zdp50labs.git
+      
+- name: Copy tar from remote machine 
+  hosts: azure_vms
+  vars:
+      ansible_user: "{{ hdpvm_admin_username }}"
+  tasks:
+    - name: Copy ZDP tarfiles from remote machine 
+      shell: sshpass -v -p "Dubai@202092" scp -o StrictHostKeyChecking=no zalonilab@137.117.209.18:/home/zalonilab/zdp-5.0-LA.tar .
