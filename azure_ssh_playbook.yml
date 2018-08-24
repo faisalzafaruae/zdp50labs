@@ -7,8 +7,8 @@
    - name: cat ssh key value
      shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
-  debug:
-     msg: "Key Value: {{ sshkeytext }}"
+   - debug:
+       msg: "Key Value: {{ sshkeytext }}"
      
 - name: Deploying Cloud Infrastructure
   hosts: localhost
