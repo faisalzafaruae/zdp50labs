@@ -89,3 +89,12 @@
   tasks:
     - name: echo the hostname of the vm
       shell: hostname
+      
+- name: Install Ansible and Git on Gateway Remote Machine
+  hosts: azure_vms
+  vars:
+      ansible_user: "{{ hdpvm_admin_username }}"
+  yum:
+     name: git
+     state: present
+      
