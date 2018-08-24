@@ -8,7 +8,7 @@
      shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
    - debug:
-       msg: "Key Value: {{ sshkeytext.stdout_lines }}"
+       msg: "Key Value: {{ sshkeytext.stdout }}"
      
 - name: Deploying Cloud Infrastructure
   hosts: localhost
