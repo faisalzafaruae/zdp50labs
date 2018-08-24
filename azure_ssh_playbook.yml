@@ -8,9 +8,9 @@
      register: sshkeypath
    - debug: var=sshkeypath
    - name: Generate SSH Key 
-     shell: cat  ~/.ssh/id_rsa.pub
+     shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
      register: sshkeytext
-     when: sshkeypath.stat.exists
+     when: sshkeypath.stat.exists == false
 
 - name: Capturing value of sshkey
   hosts: localhost
