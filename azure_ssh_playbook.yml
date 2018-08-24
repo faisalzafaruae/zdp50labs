@@ -6,7 +6,7 @@
   tasks:
      shell cat  ~/.ssh/id_rsa.pub
   register: sshkeytext
-  - debug 
+  debug:
      msg: "Key Value: {{ sshkeytext }}"
      
 - name: Deploying Cloud Infrastructure
