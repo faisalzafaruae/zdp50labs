@@ -64,7 +64,7 @@
           domainFQDN:
             value: "{{ hdpvm_dns_fqdn }}"
           sshKeyData:
-            value: "{{ sshkeytext.stdout_lines }}"
+            value: "{{sshkeytext.stdout}}"
       register: azure
 
 #    - name: Wait for port 22 to be ready
