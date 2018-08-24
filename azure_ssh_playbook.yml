@@ -10,7 +10,7 @@
         location: "{{ hdpvm_resource_location }}"
         state: present
         resource_group_name: "{{ hdpvm_resource_group }}"
-        template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdptemplate.json'
+        template_link:   'https://raw.githubusercontent.com/faisalzafaruae/zdp50labs/master/azure-templates/zdpsshtemplate.json'
         parameters: 
           location: 
             value: "{{ hdpvm_resource_location }}"
