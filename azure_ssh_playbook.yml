@@ -92,6 +92,8 @@
       
 - name: Install Ansible and Git on Gateway Remote Machine
   hosts: azure_vms
+  become: yes
+  become_user: root
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
   tasks:
