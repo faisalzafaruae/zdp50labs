@@ -94,7 +94,7 @@
   hosts: azure_vms
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
-  yum:
-     name: git
-     state: present
+  tasks:
+    - name: Install git
+      yum: name=git state=present
       
