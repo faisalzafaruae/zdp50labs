@@ -111,10 +111,11 @@
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
   tasks:
-    - name: echo the hostname of the vm
-      shell: hostname
+    - stat: path="~/.ssh/id_rsa.pub"
+      register: sshkeypathgw
     - name: create ssh-keygen on HDP Sandbox
       shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
+      when: sshkeypathgw.stat.exists == false
       
 - name: Install Ansible and Git on Gateway Remote Machine
   hosts: azure_vms
