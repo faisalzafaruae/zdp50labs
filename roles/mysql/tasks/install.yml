@@ -9,21 +9,21 @@
 #        - "mysql-community-common-5.7.22-1.el7.x86_64.rpm"
 #        - "mysql-community-server-5.7.22-1.el7.x86_64.rpm"
     
- - name: Get MySQL version
-   shell: "mysql --version 2>&1 | grep mysql | awk '{print $3}' | grep 1"
-   register: mysql_version
+  - name: Get MySQL version
+    shell: "mysql --version 2>&1 | grep mysql | awk '{print $3}' | grep 1"
+    register: mysql_version
    
- - name: Install mysql in server from local yum repository
-   yum:
+  - name: Install mysql in server from local yum repository
+    yum:
        name: "{{item}}"
        enablerepo: "{{zdp_yum_repository_name}}"
        skip_broken: yes
-   with_items:
+    with_items:
        - "mysql-common"
        - "mysql-libs"
        - "mysql"
        - "mysql-server"
-   when: mysql_version.stdout == "14.14"
+    when: mysql_version.stdout is version('14', '>=')
 
   - name: Make "my.cnf" file for mysql
     copy:
