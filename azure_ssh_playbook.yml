@@ -123,6 +123,7 @@
   become_user: root
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
+      ansible_sudo_pass: "{{ hdpvm_admin_password }}"
   tasks:
     - name: Installing git
       yum: name=git state=present
