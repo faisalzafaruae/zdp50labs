@@ -2,13 +2,13 @@
   - name: Copy node package to tmp directory
     copy:
         src: /home/zaloni/zdprpms/{{item}}
-        dest: "{{zdp_package_temp_location}}"
+        dest: /home/zaloni/zdprpms/
     with_items:
         - "node-v6.9.5-linux-x64.tar.gz"
 
   - name: Untar node package to /opt
     unarchive:
-       src: "{{zdp_package_temp_location}}/node-v6.14.3-linux-x64.tar.gz"
+       src: "/home/zaloni/zdprpms/node-v6.9.5-linux-x64.tar.gz"
        dest: /opt
 
 #  - name: Install npm and nodejs in server from local yum repository
