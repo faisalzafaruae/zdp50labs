@@ -12,6 +12,7 @@
  - name: Get MySQL version
    shell: "mysql --version 2>&1 | grep mysql | awk '{print $3}' | grep 1"
    register: mysql_version
+   
  - name: Install mysql in server from local yum repository
    yum:
        name: "{{item}}"
@@ -24,7 +25,7 @@
        - "mysql-server"
    when: mysql_version.stdout == "14.14"
 
-  - name: Make my.cnf file for mysql
+  - name: Make "my.cnf" file for mysql
     copy:
         dest: "/etc/my.cnf"
         content: |
