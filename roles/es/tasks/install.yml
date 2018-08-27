@@ -1,14 +1,14 @@
 ---
-#  - name: Copy es package to tmp directory
-#    copy:
-#        src: /tmp/zdp_rpm_packages/{{item}}
-#        dest: /tmp/zdp_install_temp_dir
-#    with_items:
-#        - "zdp-es-2.4.1.0-1.noarch.rpm"
+  - name: Copy es package to tmp directory
+    copy:
+        src: /home/zaloni/zdprpms/{{item}}
+        dest: /tmp/zdp_install_temp_dir
+    with_items:
+        - "zdp-es-2.4.1.0-1.noarch.rpm"
 
   - name: Install es in server from local directory
     yum:
-        name: "/home/zaloni/zdprpms/{{item}}"
+        name: "/tmp/zdp_install_temp_dir/{{item}}"
 #        enablerepo: "{{zdp_yum_repository_name}}"
         state: present
     with_items:
