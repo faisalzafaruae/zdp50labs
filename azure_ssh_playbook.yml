@@ -144,4 +144,4 @@
       ansible_user: "{{ hdpvm_admin_username }}"
   tasks:
     - name: Copy ZDP tarfiles from remote machine 
-      shell: sshpass -v -p "Dubai@202092" scp -o StrictHostKeyChecking=no zalonilab@137.117.209.18:/home/zalonilab/zdp-5.0-LA.tar .
+      shell: sshpass -v -p "{{ hdpvm_admin_password }}" scp -o StrictHostKeyChecking=no zalonilab@137.117.209.18:/home/zalonilab/zdp-5.0-LA.tar .
