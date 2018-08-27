@@ -1,18 +1,25 @@
 ---
-#  - name: Copy kibana package to tmp directory
-#    copy:
-#        src: /tmp/zdp_rpm_packages/{{item}}
-#        dest: /tmp/zdp_install_temp_dir
-#    with_items:
-#        - "zdp-kibana-4.5.4.0-1.noarch.rpm"
-
-  - name: Install kibana in server from local yum repository
-    yum:
-        name: "{{item}}"
-        enablerepo: "{{zdp_yum_repository_name}}"
-        skip_broken: yes
+  - name: Copy kibana package to tmp directory
+    copy:
+        src: /home/zaloni/zdprpms/{{item}}
+        dest: /tmp/zdp_install_temp_dir
     with_items:
-        - "zdp-kibana"
+        - "zdp-kibana-4.5.4.0-1.noarch.rpm"
+
+#  - name: Install kibana in server from local yum repository
+#    yum:
+#        name: "{{item}}"
+#        enablerepo: "{{zdp_yum_repository_name}}"
+#        skip_broken: yes
+#    with_items:
+#        - "zdp-kibana"
+
+  - name: Install kibana in server from local RPM
+    yum:
+        name: "/tmp/zdp_install_temp_dir/{{item}}"
+        state: present
+    with_items:
+        - "zdp-kibana-4.5.4.0-1.noarch.rpm"
 
   - name: Configure with Registry
     become: True

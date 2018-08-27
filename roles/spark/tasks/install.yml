@@ -1,18 +1,25 @@
 ---
-#  - name: Copy spark package to tmp directory
-#    copy:
-#        src: /tmp/zdp_rpm_packages/{{item}}
-#        dest: /tmp/zdp_install_temp_dir
-#    with_items:
-#        - "zdp-spark-5.0.0_FINAL.0-1.noarch.rpm"
-
-  - name: Install spark in server from local yum repository
-    yum:
-        name: "{{item}}"
-        enablerepo: "{{zdp_yum_repository_name}}"
-        skip_broken: yes
+  - name: Copy spark package to tmp directory
+    copy:
+        src: /home/zaloni/zdprpms/{{item}}
+        dest: /tmp/zdp_install_temp_dir
     with_items:
-        - "zdp-spark"
+        - "zdp-spark-5.0.0_FINAL.0-1.noarch.rpm"
+
+#  - name: Install spark in server from local yum repository
+#    yum:
+#        name: "{{item}}"
+#        enablerepo: "{{zdp_yum_repository_name}}"
+#        skip_broken: yes
+#    with_items:
+#        - "zdp-spark"
+
+  - name: Install mr in server from local RPM
+    yum:
+        name: "/tmp/zdp_install_temp_dir/{{item}}"
+        state: present
+    with_items:
+        - "zdp-spark-5.0.0_FINAL.0-1.noarch.rpm"
 
 ## CONFIGURE THE YML
 
