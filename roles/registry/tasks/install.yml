@@ -1,7 +1,7 @@
 ---
   - name: Copy registry package to tmp directory
     copy:
-        src: /home/zaloni/{{item}}
+        src: /home/zaloni/zdprpms/{{item}}
         dest: /tmp/zdp_install_temp_dir
     with_items:
         - "zdp-registry-3.0.3.0-1.noarch.rpm"
