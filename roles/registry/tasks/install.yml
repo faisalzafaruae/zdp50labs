@@ -6,13 +6,13 @@
     with_items:
         - "zdp-registry-3.0.3.0-1.noarch.rpm"
 
-#  - name: Install registry in server from local yum repository
-#    yum:
-#        name: "{{item}}"
-#        enablerepo: "{{zdp_yum_repository_name}}"
-#        skip_broken: yes
-#    with_items:
-#        - "zdp-registry"
+  - name: Install registry in server from local yum repository
+    yum:
+        name: "{{item}}"
+#       enablerepo: "{{zdp_yum_repository_name}}"
+        skip_broken: yes
+    with_items:
+        - "zdp-registry"
 
   - name: run encryptor
     include: encrypt.yml
