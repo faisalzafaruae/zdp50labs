@@ -8,11 +8,10 @@
 
   - name: Install registry in server from local yum repository
     yum:
-        name: "{{item}}"
-#       enablerepo: "{{zdp_yum_repository_name}}"
-        skip_broken: yes
+        name: "/tmp/zdp_install_temp_dir/{{item}}"
+        state: present
     with_items:
-        - "zdp-registry"
+        - "zdp-registry-3.0.3.0-1.noarch.rpm"
 
   - name: run encryptor
     include: encrypt.yml
