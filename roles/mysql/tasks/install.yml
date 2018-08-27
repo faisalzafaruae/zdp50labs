@@ -62,7 +62,8 @@
     service:
         name: mysqld
         state: restarted
-
+    when: mysql_version.stdout != "14.14"
+    
   - name: Set root password for mysql [STEP 2]
     command: "mysqladmin -uroot password {{ mysql_admin_password }}"
     when: mysql_version.stdout != "14.14"

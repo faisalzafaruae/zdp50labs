@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\inventory",
+    "\\inventory\\zdp50lab",
+    "\\inventory\\zdp50lab\\group_vars",
+    "\\inventory\\zdp50lab\\group_vars\\all",
+    "\\roles",
+    "\\roles\\common\\tasks",
+    "\\roles\\mysql",
+    "\\roles\\mysql\\tasks"
+  ],
+  "SelectedNode": "\\roles\\mysql\\tasks\\install.yml",
+  "PreviewInSolutionExplorer": false
+}

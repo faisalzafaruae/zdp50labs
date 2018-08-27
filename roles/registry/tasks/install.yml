@@ -1,21 +1,18 @@
 ---
-#  - name: Copy registry package to tmp directory
-#    copy:
-#        src: /tmp/zdp_rpm_packages/{{item}}
-#        dest: /tmp/zdp_install_temp_dir
-#    with_items:
-#        - "zdp-registry-3.0.3.0-1.noarch.rpm"
-
-  - name: Install registry in server from local yum repository
-    yum:
-        name: "{{item}}"
-        enablerepo: "{{zdp_yum_repository_name}}"
-        skip_broken: yes
+  - name: Copy registry package to tmp directory
+    copy:
+        src: /home/zaloni/{{item}}
+        dest: /tmp/zdp_install_temp_dir
     with_items:
-        - "zdp-registry"
+        - "zdp-registry-3.0.3.0-1.noarch.rpm"
 
-
-
+#  - name: Install registry in server from local yum repository
+#    yum:
+#        name: "{{item}}"
+#        enablerepo: "{{zdp_yum_repository_name}}"
+#        skip_broken: yes
+#    with_items:
+#        - "zdp-registry"
 
   - name: run encryptor
     include: encrypt.yml
