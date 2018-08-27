@@ -14,7 +14,7 @@
 #    with_items:
 #        - "zdp-activemq"
 
-- name: Install activemq in server from local RPM
+  - name: Install activemq in server from local RPM
     yum:
         name: "/tmp/zdp_install_temp_dir/{{item}}"
         state: present
