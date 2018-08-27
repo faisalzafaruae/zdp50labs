@@ -1,7 +1,7 @@
 ---
   - name: Copy hive package to tmp directory
     copy:
-        src: /tmp/zdp_rpm_packages/{{item}}
+        src: /home/zaloni/zdprpms/{{item}}
         dest: /tmp/zdp_install_temp_dir
     with_items:
         - "zdp-hive-5.0.0_FINAL.0-1.noarch.rpm"
