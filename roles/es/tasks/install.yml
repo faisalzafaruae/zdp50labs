@@ -6,13 +6,13 @@
 #    with_items:
 #        - "zdp-es-2.4.1.0-1.noarch.rpm"
 
-  - name: Install es in server from local yum repository
+  - name: Install es in server from local directory
     yum:
-        name: "{{item}}"
-        enablerepo: "{{zdp_yum_repository_name}}"
-        skip_broken: yes
+        name: "/home/zaloni/zdprpms/{{item}}"
+#        enablerepo: "{{zdp_yum_repository_name}}"
+        state: present
     with_items:
-        - "zdp-es"
+        - "zdp-es-2.4.1.0-1.noarch.rpm"
 
   - name: Modify network.host to ip in elasticsearch.yml
     replace:
