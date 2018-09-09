@@ -106,7 +106,7 @@
       pause:
         minutes: 5
 
-- name: Wait for SSH and then print hostname
+- name: Create SSH Key Gen on HDP Sandbox
   hosts: azure_vms
   vars:
       ansible_user: "{{ hdpvm_admin_username }}"
@@ -144,4 +144,4 @@
       ansible_user: "{{ hdpvm_admin_username }}"
   tasks:
     - name: Copy ZDP tarfiles from remote machine 
-      shell: sshpass -v -p "{{ hdpvm_admin_password }}" scp -o StrictHostKeyChecking=no zalonilab@137.117.209.18:/home/zalonilab/zdp-5.0-LA.tar .
+      shell: sshpass -v -p "{{ hdpvm_admin_password }}" scp -o StrictHostKeyChecking=no zalonilab@zaloniyum.eastus.cloudapp.azure.com:/home/zalonilab/ZDP-5.0.1.tar.gz .
