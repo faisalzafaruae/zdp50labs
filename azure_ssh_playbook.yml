@@ -116,9 +116,9 @@
     - name: create ssh-keygen on HDP Host Sandbox
       shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
       when: sshkeypathgw.stat.exists == false
-    - name: Save ssh Key to HDP Macine 
-      shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
-      when: sshkeypathgw.stat.exists == false
+#    - name: Save ssh Key to HDP Macine 
+#      shell: ssh-keygen -q -f ~/.ssh/id_rsa -N ""
+#      when: sshkeypathgw.stat.exists == false
 
 - name: Install Ansible and Git on Gateway Remote Machine
   hosts: azure_vms
