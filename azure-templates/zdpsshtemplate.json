@@ -238,6 +238,36 @@
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "22"
                         }
+                    }, 
+                    {
+                        "name": "Bedrock",
+                        "properties": {
+                            "priority": 301,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [],
+                            "destinationApplicationSecurityGroups": [],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "9090"
+                        }
+                    }, 
+                    {
+                        "name": "Ambari",
+                        "properties": {
+                            "priority": 301,
+                            "protocol": "TCP",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [],
+                            "destinationApplicationSecurityGroups": [],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "8080"
+                        }
                     }
                 ]
             }
