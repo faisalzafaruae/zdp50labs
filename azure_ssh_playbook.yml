@@ -131,7 +131,7 @@
     - name: Installing git
       yum: name=git state=present
     - name: Installing ansible
-      yum: name=ansible state=present
+      yum: name='https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.5.4-1.el7.ans.noarch.rpm' state=present
       
 
 - name: Copy tar from remote machine 
