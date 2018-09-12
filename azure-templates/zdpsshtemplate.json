@@ -257,7 +257,7 @@
                     {
                         "name": "Ambari",
                         "properties": {
-                            "priority": 301,
+                            "priority": 302,
                             "protocol": "TCP",
                             "access": "Allow",
                             "direction": "Inbound",
