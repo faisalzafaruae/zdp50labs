@@ -1,6 +1,7 @@
 # Create or update a template deployment based on uris using parameter and template links
 - name: Wait for SSH and then print hostname
   hosts: "40.118.71.52:"
+  gather_facts: False
 #  user: "{{ hdpvm_admin_username }}"
   vars:
     ansible_user: zaloni
