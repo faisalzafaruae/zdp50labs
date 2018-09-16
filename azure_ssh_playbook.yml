@@ -194,6 +194,6 @@
       expect:
          command: git clone https://zalonidxb@gitlab.com/jitulnath/zdp-ansible.git
          responses: 
-           zalonidxb@gitlab.com': 
+           zalonidxb@gitlab.com': Zaloni@202092
       when: zdpinstallpath.stat.exists == false
       
