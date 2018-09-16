@@ -13,8 +13,8 @@
     #  pip:
     #     name: pexpect
     #  become: yes
-    - command: "pip list"
-    - command: "python -c 'import pexpect'"
+    #- command: "pip list"
+    #- command: "python -c 'import pexpect'"
 
     - name: Try to reset root password 
       expect:
