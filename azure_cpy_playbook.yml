@@ -6,7 +6,7 @@
   vars:
     ansible_user: zaloni
     ##ansible_ssh_pass: Dubai@202092
-    ansible_sudo_pass: hadoop
+    ansible_sudo_pass: Dubai@202092
   tasks:
 
     - name: install pexpect
