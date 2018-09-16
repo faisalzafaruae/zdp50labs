@@ -13,7 +13,7 @@
     #  pip:
     #     name: pexpect
     #  become: yes
-    #- command: "pip list"
+    - command: "sudo easy_install pexpect"
     #- command: "python -c 'import pexpect'"
 
     - name: Try to reset root password 
@@ -23,3 +23,4 @@
            UNIX password: "hadoop"
            New password: "Dubai@202092"
            Retype new password: "Dubai@202092"
+           -hdp ~]#: "exit"
