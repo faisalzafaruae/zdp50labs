@@ -1,7 +1,7 @@
 # Create or update a template deployment based on uris using parameter and template links
 - name: Wait for SSH and then print hostname
   hosts: "40.118.71.52:"
-  gather_facts: False
+  #gather_facts: False
 #  user: "{{ hdpvm_admin_username }}"
   vars:
     ansible_user: zaloni
@@ -17,6 +17,6 @@
       expect:
          command: sshpass -v -p "hadoop" ssh root@172.17.0.2 -o StrictHostKeyChecking=no 
          responses: 
-          UNIX password: "hadoop"
-          New password: "Dubai@202092"
-          Retype new password: "Dubai@202092"
+           UNIX password: "hadoop"
+           New password: "Dubai@202092"
+           Retype new password: "Dubai@202092"
