@@ -7,6 +7,12 @@
     ansible_user: zaloni
     ##ansible_ssh_pass: Dubai@202092
   tasks:
+
+    - name: install pexpect
+      pip:
+         name: pexpect
+      become: yes
+
     - name: Try to reset root password 
       expect:
          command: sshpass -v -p "hadoop" ssh root@172.17.0.2 -o StrictHostKeyChecking=no 
