@@ -1,6 +1,6 @@
 # Create or update a template deployment based on uris using parameter and template links
 - name: Wait for SSH and then print hostname
-  hosts: "40.118.71.52:"
+  hosts: "137.117.178.235:"
   #gather_facts: False
 #  user: "{{ hdpvm_admin_username }}"
   vars:
