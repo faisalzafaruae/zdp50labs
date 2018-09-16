@@ -18,7 +18,7 @@
       shell: sudo easy_install pexpect
       register: easyinstalltext
     - debug:
-      msg: "Key Value: {{ easyinstalltext.stdout }}"
+         msg: "Key Value: {{ easyinstalltext.stdout }}"
     #- command: "python -c 'import pexpect'"
 
     - name: Try to reset root password 
