@@ -20,8 +20,8 @@
    - name: cat ssh key value
      shell: cat  ~/.ssh/id_rsa.pub
      register: sshkeytext
-   - debug:
-       msg: "Key Value: {{ sshkeytext.stdout }}"
+##   - debug:
+##       msg: "Key Value: {{ sshkeytext.stdout }}"
      
 - name: Deploying Cloud Infrastructure
   hosts: localhost
