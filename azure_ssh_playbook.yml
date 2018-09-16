@@ -132,7 +132,18 @@
       yum: name=git state=present
     - name: Installing ansible
       yum: name='https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.5.4-1.el7.ans.noarch.rpm' state=present
-      
+
+- name: Install pexpect on Sandbox Host
+  hosts: azure_vms
+  become: yes
+  become_user: root
+  vars:
+    ansible_user: "{{ hdpvm_admin_username }}"
+    ansible_sudo_pass: "{{ hdpvm_admin_password }}"
+  tasks:
+    - name:  Installing pexpect using easy_install 
+      shell:  easy_install pexpect
+      register: easyinstalltext
 
 - name: Copy tar from remote machine 
   hosts: azure_vms
@@ -145,6 +156,33 @@
       shell: sshpass -v -p "{{ hdpvm_admin_password }}" scp -o StrictHostKeyChecking=no zalonilab@zaloniyum.eastus.cloudapp.azure.com:/home/zalonilab/ZDP-5.0.1.tar.gz .
       when: zdptarfilepath.stat.exists == false
 
+- name: Resetting Root Password for Sandbox-HDP
+  hosts: azure_vms
+  gather_facts: False
+  vars:
+    ansible_user: "{{ hdpvm_admin_username }}"
+    ansible_sudo_pass: "{{ hdpvm_admin_password }}"
+  tasks:
+    - name: Try to reset root password on first loging
+      expect:
+         command: sshpass -v -p "hadoop" ssh root@172.17.0.2 -o StrictHostKeyChecking=no 
+         responses: 
+           UNIX password: "hadoop"
+           New password: "{{ hdpvm_admin_password }}"
+           Retype new password: "{{ hdpvm_admin_password }}"
+           -hdp ~]#: "exit"
+
+- name: Setup Keybased Login 
+  hosts: azure_vms
+  gather_facts: False
+  vars:
+    ansible_user: "{{ hdpvm_admin_username }}"
+    ansible_sudo_pass: "{{ hdpvm_admin_password }}"
+  tasks:
+    - name: Copy ssh key to HDP Docker Container
+      shell: sshpass -v -p "{{ hdpvm_admin_password }}" ssh-copy-id root@172.17.0.2 -o StrictHostKeyChecking=no 
+
+
 - name: Clone GIT Repo on the Gateway machine
   hosts: azure_vms
   vars:
@@ -153,6 +191,9 @@
     - stat: path="~/zdp50labs/README.md"
       register: zdpinstallpath
     - name: Clone GIT Repo for ZDP Installation 
-      shell: git clone https://zalonidxb@gitlab.com/jitulnath/zdp-ansible.git
+      expect:
+         command: git clone https://zalonidxb@gitlab.com/jitulnath/zdp-ansible.git
+         responses: 
+           zalonidxb@gitlab.com': 
       when: zdpinstallpath.stat.exists == false
       
