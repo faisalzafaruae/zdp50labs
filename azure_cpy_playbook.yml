@@ -5,7 +5,7 @@
 #  user: "{{ hdpvm_admin_username }}"
   vars:
     ansible_user: zaloni
-    ansible_ssh_pass: Dubai@202092
+    ##ansible_ssh_pass: Dubai@202092
   tasks:
     - name: Try to reset root password 
       expect:
