@@ -17,7 +17,6 @@
       expect:
          command: sshpass -v -p "hadoop" ssh root@172.17.0.2 -o StrictHostKeyChecking=no 
          responses: 
-          \'s.password: "hadoop" 
           UNIX password: "hadoop"
           New password: "Dubai@202092"
           Retype new password: "Dubai@202092"
