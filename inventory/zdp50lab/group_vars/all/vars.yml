@@ -3,7 +3,7 @@
 ansible_user: root
 
 # Temporary location where the rpms are placed
-zdp_package_temp_location: /tmp/zdp_install_temp_dir
+###zdp_package_temp_location: /tmp/zdp_install_temp_dir
 
 
 # This tells where the ZDP RPMS are located.  This has to be one of 'Control', 'Target', 'Yum' or 'Network'
@@ -11,52 +11,52 @@ zdp_package_temp_location: /tmp/zdp_install_temp_dir
 # Target - RPMs are picked up from the remote hosts from the  {{zdp_rpms_location_on_target_server}} directory
 # Yum - RPMs are installed from a yum repository. remote hosts are assumed to be configured with yum
 # Network - RPM's are downloaded from a http url defined by {{zdp_rpms_http_location}}
-zdp_rpms_location: Control
-zdp_yum_repository_name: zdptestrepo
-zdp_rpms_location_on_control_server: '/home/zaloni/zdprpms'
+###zdp_rpms_location: Control
+###zdp_yum_repository_name: zdptestrepo
+###zdp_rpms_location_on_control_server: '/home/zaloni/zdprpms'
 
 #MYSL zdp database details
 # Which database should ZDP use?
-zdp_db_name: zdp_50_core
+###zdp_db_name: zdp_50_core
 # Which DB credentials should ZDP use
-zdp_db_user: zaloni
-zdp_db_password: "{{ vault_zdp_db_password }}"
+###zdp_db_user: zaloni
+###zdp_db_password: "{{ vault_zdp_db_password }}"
 # Optional credentials to the MySQL admin credentials. Secrets are defined in the vault.yml files
-mysql_admin_user: root
-mysql_admin_password: "{{ vault_mysql_admin_password }}"
+###mysql_admin_user: root
+###mysql_admin_password: "{{ vault_mysql_admin_password }}"
 # The authentication password for the registry
-registry_admin_password: "{{ vault_registry_admin_password }}"
+###registry_admin_password: "{{ vault_registry_admin_password }}"
 # The encryption key for the registry. Will be set only during a fresh install
-encrypt_password: "{{ vault_encrypt_password }}"
+###encrypt_password: "{{ vault_encrypt_password }}"
 
 
 
 #SSL Details in case of HTTPS SETUP
 # Set "True" if ssl needs to be enabled for zdp or else set "True"
-zdp_ssl_enable: false
-zdp_ssl_key_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"
-zdp_ssl_trust_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.jks"
-zdp_ssl_certificate_path: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"
-zdp_ssl_key_store_password: "zaloni.1234"
-zdp_ssl_key_store_type: "JKS"
-zdp_ssl_key_alias: "zdp-server"
-zdp_ssl_dest_keystore_password: "zaloni.1234"
+###zdp_ssl_enable: false
+###zdp_ssl_key_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"
+###zdp_ssl_trust_store: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.jks"
+###zdp_ssl_certificate_path: "/opt/zdp/zdp-cacerts/zdpdoc-n3.zalonilabs.com.key"
+###zdp_ssl_key_store_password: "zaloni.1234"
+###zdp_ssl_key_store_type: "JKS"
+###zdp_ssl_key_alias: "zdp-server"
+###zdp_ssl_dest_keystore_password: "zaloni.1234"
 
 
 #KERBEROS Details to work with ZDP
 # Set "True" if kerberos needs to be enabled for zdp or else set "True"
-zdp_kerberos_enable: False
-zdp_keytab_location: /etc/security/keytabs/zaloni.keytab
-zdp_kerberos_principal: zaloni@sandbox-hdp.hortonworks.com
-zdp_krb_conf_location: /etc/krb5.conf
+###zdp_kerberos_enable: False
+###zdp_keytab_location: /etc/security/keytabs/zaloni.keytab
+###zdp_kerberos_principal: zaloni@sandbox-hdp.hortonworks.com
+###zdp_krb_conf_location: /etc/krb5.conf
 
 # ZDP gateway port
-zdp_gateway_port: 9090
-zdp_gateway_hostname: sandbox-hdp.hortonworks.com
+###zdp_gateway_port: 9090
+###zdp_gateway_hostname: sandbox-hdp.hortonworks.com
 
 
 # HDP Sandbox Variables
-hdpvm_resource_group: z2demo  #Must be Unique accross all deployments 
+hdpvm_resource_group: z50demo  #Must be Unique accross all deployments 
 hdpvm_resource_location: westeurope
 hdpvm_machine_name: zdpvm-{{ hdpvm_resource_group }}
 #hdpvm_machine_size: Standard_E16-8s_v3  #8 Core 128GB 
