@@ -9,10 +9,10 @@
     ansible_sudo_pass: Dubai@202092
   tasks:
 
-    - name: install pexpect
-      pip:
-         name: pexpect
-      become: yes
+    #- name: install pexpect
+    #  pip:
+    #     name: pexpect
+    #  become: yes
 
     - name: Try to reset root password 
       expect:
